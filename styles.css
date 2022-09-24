@@ -1,14 +1,62 @@
 * {
-    border: 1px solid black;
-    text-align: center;
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+ font-size: xx-large;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #23283b;
 }
 
 .grid-container {
     display: grid;
-    width: 300px;
-    height: 500px;
+    /*border: 1px solid black;*/
+    background-color: #131313;
+    width: 380px;
+    height: 600px;
+    border-radius: 5px;
+    padding: 10px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+
+  button {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin: 2px;
+  }
+
+  .fun-btn {
+    background: #00E6F6;
+  }
+
+  button.number {
+    background: #232534;
+    color: aliceblue;
+  }
+
+  .fun-btn:hover {
+    background-color: #00c6d4;
+  }
+
+  button.number:hover {
+    background-color: #282a3a;
+  }
+
+  /*button:hover {
+    background-color: aliceblue;
+  }*/
+
+  .display {
+    margin: 5px;
+    padding-right: 15px;
+    text-align: end;
+    color: aliceblue;
   }
 
   .forNumbers {
