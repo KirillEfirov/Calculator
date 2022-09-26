@@ -3,8 +3,6 @@ let br = document.querySelector("br");
 let expression = document.querySelector(".expression");
 let equals = document.querySelector(".equals");
 let button = document.querySelectorAll("button");
-
-
 const number = document.querySelectorAll(".number");
 
 //console.log(number[0].textContent);
@@ -15,24 +13,53 @@ const number = document.querySelectorAll(".number");
 
 
 function getExpression() {
-    var str = " ";
-    for(const each of number) {
+    let output = "";
+
+    for(const each of button) {
         each.addEventListener("click", () => {
-            str += each.textContent;
-            return console.log(str);
+            if(each.textContent === '=') {
+                let array = output.split(' ');
+                console.log(array);
+                return array;
+                /*console.log(output);
+                return output;*/
+            }
+            if(each.textContent === '+' || each.textContent === '-'
+            || each.textContent === '*' || each.textContent === '/'){
+                output += " ";
+                output += each.textContent;
+                output += " ";
+            } 
+            else {
+                output += each.textContent;
+                console.log(output);
+                //console.log(typeof output);
+                return output;
+            }
         });
     }
 }
 getExpression();
-/*number[0].addEventListener("click", () => {
-});*/
 
 
 
+function intoPostfixNotation(arr) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] == '+' || arr[i] == '-'
+        ||  arr[i] == '*' || arr[i] == '/') {  
+        
+            switch (arr[i]) {
+                case "+":
+                case "-": return 1;
 
+                case "*":
+                case "/": return 2;
+            }
+        }
 
-
-
+        console.log(arr[i]);
+    }   
+}
 
 
 
@@ -94,21 +121,50 @@ class Stack {
     }
 
     printStack() {
-        var str = "";
+        var stack = " ";
         for (var i = 0; i < this.items.length; i++)
-            str += this.items[i] + " ";
-        return str;
+            stack += this.items[i] + " ";
+        return stack;
     }
 }
 let stack = new Stack();
 
 
+class Queue {
+    constructor() {
+        this.items = [];
+    }
+
+    push(element) {
+        return this.items.unshift(element);
+    }
+
+    pop() {
+        if(this.items.length > 0) {
+            return this.items.pop();
+        }
+        return 0;
+    }
+
+    isEmpty(){
+        return this.items.length == 0;
+     }
+
+    size(){
+        return this.items.length;
+    }
+
+    printStack() {
+        var queue = "";
+        for (var i = 0; i < this.items.length; i++)
+            queue += this.items[i] + " ";
+        return queue;
+    }
+}
+let queue = new Queue();
 
 
-
-
-
-function reversePolish(expression) {
+/*function reversePolish(expression) {
     let expr = expression.split(" "); //turn String into array
     const array = []; 
     if(expr === '') {
@@ -117,5 +173,5 @@ function reversePolish(expression) {
 
     console.log(reversePolish('1 3 5 * -'));
 
-}
+}*/
 
