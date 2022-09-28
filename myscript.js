@@ -12,8 +12,8 @@ const number = document.querySelectorAll(".number");
 
 
 
-function getExpression() {
-    let output = "";
+function getInfix() {
+    var output = "";
 
     for(const each of button) {
         each.addEventListener("click", () => {
@@ -21,8 +21,6 @@ function getExpression() {
                 let array = output.split(' ');
                 console.log(array);
                 return array;
-                /*console.log(output);
-                return output;*/
             }
             if(each.textContent === '+' || each.textContent === '-'
             || each.textContent === '*' || each.textContent === '/'){
@@ -33,33 +31,81 @@ function getExpression() {
             else {
                 output += each.textContent;
                 console.log(output);
-                //console.log(typeof output);
                 return output;
             }
         });
     }
 }
-getExpression();
+getInfix();
 
 
 
-function intoPostfixNotation(arr) {
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i] == '+' || arr[i] == '-'
-        ||  arr[i] == '*' || arr[i] == '/') {  
-        
-            switch (arr[i]) {
-                case "+":
-                case "-": return 1;
+function intoPostfixNotation(infixValue) {
+    var output = "";
 
-                case "*":
-                case "/": return 2;
+    for (let i = 0; i < infixValue.length; i++) {
+        if (CheckIfOperator(infixValue[i])) {
+            if (infixValue[i] == '+' || infixValue[i] == '-') { 
+                while (stack.topOfStack() == '*' 
+                    || stack.topOfStack() == '/') {    
+                    output += stack.pop();
+                    output += " ";  
+                } 
+                stack.push(infixValue[i]);
             }
+            else if(infixValue[i] == '*' || infixValue[i] == '/') {
+                while (stack.topOfStack() == '*' 
+                    || stack.topOfStack() == '/') {     
+                    output += stack.pop();
+                    output += " ";  
+                }
+                stack.push(infixValue[i]);
+            }
+        } else {  
+            output += infixValue[i];
+            output += " ";  
         }
 
-        console.log(arr[i]);
-    }   
+
+
+    } 
+
+    while (stack.size() !== 0) {
+        if (stack.size() !== 1) {
+            output += stack.pop();
+            output += " ";  
+        } else output += stack.pop();    
+    }
+    
+    console.log(`output(string): ${output}`);
+
+    let array = output.split(" ");
+    console.log(array);
+    return array;
 }
+
+function CheckIfOperator(val) {
+    if (val == '+' || val == '-' ||
+        val == '*' || val == '/') {
+        return true;
+    }
+    else
+        return false;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -124,10 +170,21 @@ class Stack {
         var stack = " ";
         for (var i = 0; i < this.items.length; i++)
             stack += this.items[i] + " ";
+            //console.log(stack);
         return stack;
+    }
+
+    topOfStack() {
+        return this.items[this.items.length - 1];
     }
 }
 let stack = new Stack();
+
+
+
+
+
+
 
 
 class Queue {
