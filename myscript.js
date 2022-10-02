@@ -5,13 +5,10 @@ let equals = document.querySelector(".equals");
 let button = document.querySelectorAll("button");
 const number = document.querySelectorAll(".number");
 
-//console.log(number[0].textContent);
-
-
-
-
-
-
+/**
+ * Make up new name for function or rewrite function at all
+ * make it smaller 
+ */
 function getInfix() {
     var output = "";
 
@@ -20,7 +17,7 @@ function getInfix() {
             if(each.textContent === '=') {
                 let array = output.split(' ');
                 console.log(array);
-                return array;
+                return intoPostfixNotation(array);
             }
             if(each.textContent === '+' || each.textContent === '-'
             || each.textContent === '*' || each.textContent === '/'){
@@ -41,6 +38,7 @@ getInfix();
 
 
 function intoPostfixNotation(infixValue) {
+    let stack = new Stack();
     var output = "";
 
     for (let i = 0; i < infixValue.length; i++) {
@@ -65,9 +63,6 @@ function intoPostfixNotation(infixValue) {
             output += infixValue[i];
             output += " ";  
         }
-
-
-
     } 
 
     while (stack.size() !== 0) {
@@ -79,9 +74,7 @@ function intoPostfixNotation(infixValue) {
     
     console.log(`output(string): ${output}`);
 
-    let array = output.split(" ");
-    console.log(array);
-    return array;
+    return output.split(' ');
 }
 
 function CheckIfOperator(val) {
@@ -98,45 +91,37 @@ function CheckIfOperator(val) {
 
 
 
+function evaluatePostfix(postfixNotation) {
+    let newValue = 0;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-function add(a, b) {
-	return a + b;
-};
-function subtract(a, b) {
-	return a - b;
-};
-function sum(arr) {
-  let sum = 0;
-	for(let i = 0; i < arr.length; i++) {
-    sum += arr[i];
-  }
-  return sum;
-};
-function multiply(arr) {
-  let multiply = 1;
-
-  for (let i = 0; i < arr.length; i++) {
-    multiply *= arr[i];
-  }
-
-  return multiply;
-};
-
-
-
+    for (let i = 0; i < postfixNotation.length; i++) {
+        if (!CheckIfOperator(postfixNotation[i] || 
+            postfixNotation.length == 0 || postfixNotation.length == 1)) {
+            continue;
+        }
+        else {
+            switch (postfixNotation[i]) {
+                case '+': 
+                newValue = parseFloat(postfixNotation[i - 2]) + parseFloat(postfixNotation[i - 1]);
+                    break;
+                case '-': 
+                newValue = parseFloat(postfixNotation[i - 2]) - parseFloat(postfixNotation[i - 1]);
+                    break;
+                case '*': 
+                newValue = parseFloat(postfixNotation[i - 2]) * parseFloat(postfixNotation[i - 1]);
+                    break;
+                case '/': 
+                newValue = parseFloat(postfixNotation[i - 2]) / parseFloat(postfixNotation[i - 1]);
+                    break;
+                default:
+                    break;
+            }
+            postfixNotation.splice(i - 2, 3, newValue);
+            i = postfixNotation.indexOf(newValue);
+        }
+    }
+    return postfixNotation.pop();
+}
 
 
 
@@ -178,14 +163,6 @@ class Stack {
         return this.items[this.items.length - 1];
     }
 }
-let stack = new Stack();
-
-
-
-
-
-
-
 
 class Queue {
     constructor() {
@@ -218,17 +195,3 @@ class Queue {
         return queue;
     }
 }
-let queue = new Queue();
-
-
-/*function reversePolish(expression) {
-    let expr = expression.split(" "); //turn String into array
-    const array = []; 
-    if(expr === '') {
-        return 0;
-    }
-
-    console.log(reversePolish('1 3 5 * -'));
-
-}*/
-
