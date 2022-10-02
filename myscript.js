@@ -9,6 +9,7 @@ const number = document.querySelectorAll(".number");
  * Make up new name for function or rewrite function at all
  * make it smaller 
  */
+
 function getInfix() {
     var output = "";
 
@@ -17,7 +18,10 @@ function getInfix() {
             if(each.textContent === '=') {
                 let array = output.split(' ');
                 console.log(array);
-                return intoPostfixNotation(array);
+                console.log(intoPostfixNotation(array));
+                let postfix = intoPostfixNotation(array);
+                console.log(postfix);
+                return console.log(evaluatePostfix(postfix));
             }
             if(each.textContent === '+' || each.textContent === '-'
             || each.textContent === '*' || each.textContent === '/'){
@@ -44,8 +48,8 @@ function intoPostfixNotation(infixValue) {
     for (let i = 0; i < infixValue.length; i++) {
         if (CheckIfOperator(infixValue[i])) {
             if (infixValue[i] == '+' || infixValue[i] == '-') { 
-                while (stack.topOfStack() == '*' 
-                    || stack.topOfStack() == '/') {    
+                while (stack.topOfStack() == '*' || stack.topOfStack() == '/'
+                    || stack.topOfStack() == '+' || stack.topOfStack() == '-') {    
                     output += stack.pop();
                     output += " ";  
                 } 
