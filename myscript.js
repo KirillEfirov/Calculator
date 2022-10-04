@@ -14,22 +14,21 @@ const number = document.querySelectorAll(".number");
 /**
  * change ifs on switch in getInfix()
  */
-function getInfix() {
+function Main() {
     var output = "";
-    var arr = [];
 
     for(const each of button) {
         each.addEventListener("click", () => {
             if(each.textContent === '=') {
                 let array = output.split(' ');
                 console.log(array);
-                console.log(intoPostfixNotation(array));
                 let postfix = intoPostfixNotation(array);
                 console.log(postfix);
+                output = "";
                 return console.log(evaluatePostfix(postfix));
             }
             else if (each.textContent === '.') {
-                arr = Array.from(output);
+                let arr = Array.from(output);
 
                 if (arr[arr.length - 1] >= "0" && arr[arr.length - 1] <= "9") { 
                     let counter = 0;
@@ -43,8 +42,7 @@ function getInfix() {
                         counter = 0;
                     }
                 }
-                else console.log("Error");
-                return output;
+                return console.log(output);
             }
             else if(each.textContent === '+' || each.textContent === '-'
                  || each.textContent === '*' || each.textContent === '/'){
@@ -52,20 +50,21 @@ function getInfix() {
                 output += each.textContent;
                 output += " ";
             } 
-            else {
+            else if(each.textContent >= '0' && each.textContent <= '9'){
                 output += each.textContent;
-                console.log(output);
-                return output;
+                let array = output.split(' ');
+                console.log(array);
+                let postfix = intoPostfixNotation(array);
+                console.log(postfix);
+                return console.log(evaluatePostfix(postfix));
+            }
+            else if(each.textContent === '%') {
+
             }
         });
     }
 }
-getInfix();
-
-
-
-
-
+Main();
 
 
 
@@ -108,10 +107,18 @@ function intoPostfixNotation(infixValue) {
         } else output += stack.pop();    
     }
     
-    console.log(`output(string): ${output}`);
+    //console.log(`output(string): ${output}`);
 
     return output.split(' ');
 }
+
+
+
+
+
+
+
+
 
 function CheckIfOperator(val) {
     if (val == '+' || val == '-' ||
@@ -121,6 +128,13 @@ function CheckIfOperator(val) {
     else
         return false;
 }
+
+
+
+
+
+
+
 
 
 
@@ -156,6 +170,12 @@ function evaluatePostfix(postfixNotation) {
     }
     return postfixNotation.pop();
 }
+
+
+
+
+
+
 
 
 
@@ -197,6 +217,15 @@ class Stack {
         return this.items[this.items.length - 1];
     }
 }
+
+
+
+
+
+
+
+
+
 
 class Queue {
     constructor() {
