@@ -10,8 +10,13 @@ const number = document.querySelectorAll(".number");
  * make it smaller 
  */
 
+
+/**
+ * change ifs on switch in getInfix()
+ */
 function getInfix() {
     var output = "";
+    var arr = [];
 
     for(const each of button) {
         each.addEventListener("click", () => {
@@ -23,8 +28,26 @@ function getInfix() {
                 console.log(postfix);
                 return console.log(evaluatePostfix(postfix));
             }
-            if(each.textContent === '+' || each.textContent === '-'
-            || each.textContent === '*' || each.textContent === '/'){
+            else if (each.textContent === '.') {
+                arr = Array.from(output);
+
+                if (arr[arr.length - 1] >= "0" && arr[arr.length - 1] <= "9") { 
+                    let counter = 0;
+
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i] == ".") counter++;
+                        if (arr[i] == " ") counter = 0;
+                    }
+                    if(counter == 0) {
+                        output += each.textContent;
+                        counter = 0;
+                    }
+                }
+                else console.log("Error");
+                return output;
+            }
+            else if(each.textContent === '+' || each.textContent === '-'
+                 || each.textContent === '*' || each.textContent === '/'){
                 output += " ";
                 output += each.textContent;
                 output += " ";
@@ -38,6 +61,15 @@ function getInfix() {
     }
 }
 getInfix();
+
+
+
+
+
+
+
+
+
 
 
 
@@ -89,8 +121,6 @@ function CheckIfOperator(val) {
     else
         return false;
 }
-
-
 
 
 
