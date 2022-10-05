@@ -14,6 +14,7 @@ const number = document.querySelectorAll(".number");
 /**
  * change ifs on switch in getInfix()
  */
+
 function Main() {
     var output = "";
 
@@ -25,8 +26,7 @@ function Main() {
                 let postfix = intoPostfixNotation(array);
                 console.log(postfix);
                 output = String(evaluatePostfix(postfix));
-                console.log(output);
-                return console.log(typeof output);
+                return console.log(output);
             }
             else if (each.textContent === '.') {
                 let arr = Array.from(output);
@@ -60,10 +60,12 @@ function Main() {
                 return console.log(evaluatePostfix(postfix));
             }
             else if(each.textContent === '%') {
+                let remembOutput = output;
                 output += " ";
                 output += each.textContent;
-                
-                
+                let array = output.split(' ');
+                output = evaluatePercent(array);
+                console.log(output);
             }
         });
     }
@@ -71,21 +73,28 @@ function Main() {
 Main();
 
 
-function evaluatePercent(output) {
+function evaluatePercent(array) {
     let newValue = 0;
-    let array = output.split(' ');
 
     if (array.length === 2) {
         array.pop();
+        array.unshift(String(array[0]/100));
+        array.pop();
+        return array.toString();
+    } 
+    else if(array.length > 2){
+        let beforePercent = array.slice(0, array.length - 3);
+
+
     }
 
-    let beforePercent = array.slice(0, array.length - 3);
+    /*let beforePercent = array.slice(0, array.length - 3);
     if(beforePercent.length === 1) {
         
     }
     else {
         let postfix = intoPostfixNotation(beforePercent);
-    }
+    }*/
 
     /*let result = evaluatePercent(evaluatePostfix(postfix), Number(array[array.length - 2]));
     return console.log(result);*/
@@ -106,8 +115,6 @@ function evaluatePercent(output) {
         default:
             break;
     }
-
-
 }
 
 function intoPostfixNotation(infixValue) {
@@ -161,6 +168,11 @@ function CheckIfOperator(val) {
 
 function evaluatePostfix(postfixNotation) {
     let newValue = 0;
+
+    if (postfixNotation.length == 2) {
+        postfixNotation.pop();
+        return postfixNotation.pop();
+    }
 
     for (let i = 0; i < postfixNotation.length; i++) {
         if (!CheckIfOperator(postfixNotation[i]) || postfixNotation.length == 0 
