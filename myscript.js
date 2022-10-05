@@ -59,7 +59,17 @@ function Main() {
                 return console.log(evaluatePostfix(postfix));
             }
             else if(each.textContent === '%') {
+                output += " ";
+                output += each.textContent;
+                let array = output.split(' ');
+                console.log(array);
 
+                let beforePercent = array.slice(0, array.length - 3);
+                if(beforePercent.length === 1) return console.log(beforePercent[0]);
+                let postfix = intoPostfixNotation(beforePercent);
+
+                /*let result = evaluatePercent(evaluatePostfix(postfix), Number(array[array.length - 2]));
+                return console.log(result);*/
             }
         });
     }
@@ -68,6 +78,26 @@ Main();
 
 
 
+function evaluatePercent(number, percent, sign) {
+    let newValue = 0;
+
+    switch (sign) {
+        case '+': 
+        newValue = number + (number * percent / 100);
+            break;
+        case '-': 
+        newValue = number - (number * percent / 100);
+            break;
+        case '*': 
+        newValue = number * percent / 100;
+            break;
+        case '/': 
+        newValue = number / (percent / 100);
+            break;
+        default:
+            break;
+    }
+}
 
 
 
@@ -143,23 +173,23 @@ function evaluatePostfix(postfixNotation) {
     let newValue = 0;
 
     for (let i = 0; i < postfixNotation.length; i++) {
-        if (!CheckIfOperator(postfixNotation[i] || 
-            postfixNotation.length == 0 || postfixNotation.length == 1)) {
-            continue;
+        if (!CheckIfOperator(postfixNotation[i]) || postfixNotation.length == 0 
+        || postfixNotation.length == 1) {
+                continue;
         }
         else {
             switch (postfixNotation[i]) {
                 case '+': 
-                newValue = parseFloat(postfixNotation[i - 2]) + parseFloat(postfixNotation[i - 1]);
+                newValue = Number(postfixNotation[i - 2]) + Number(postfixNotation[i - 1]);
                     break;
                 case '-': 
-                newValue = parseFloat(postfixNotation[i - 2]) - parseFloat(postfixNotation[i - 1]);
+                newValue = Number(postfixNotation[i - 2]) - Number(postfixNotation[i - 1]);
                     break;
                 case '*': 
-                newValue = parseFloat(postfixNotation[i - 2]) * parseFloat(postfixNotation[i - 1]);
+                newValue = Number(postfixNotation[i - 2]) * Number(postfixNotation[i - 1]);
                     break;
                 case '/': 
-                newValue = parseFloat(postfixNotation[i - 2]) / parseFloat(postfixNotation[i - 1]);
+                newValue = Number(postfixNotation[i - 2]) / Number(postfixNotation[i - 1]);
                     break;
                 default:
                     break;
