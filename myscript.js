@@ -74,8 +74,6 @@ Main();
 
 
 function evaluatePercent(array) {
-    let newValue = 0;
-
     if (array.length === 2) {
         array.pop();
         array.unshift(String(array[0]/100));
@@ -83,37 +81,31 @@ function evaluatePercent(array) {
         return array.toString();
     } 
     else if(array.length > 2){
+        let newValue = 0;                                   //value after all manipulations
         let beforePercent = array.slice(0, array.length - 3);
-
-
-    }
-
-    /*let beforePercent = array.slice(0, array.length - 3);
-    if(beforePercent.length === 1) {
-        
-    }
-    else {
         let postfix = intoPostfixNotation(beforePercent);
-    }*/
+        let valueBeforePercent = evaluatePostfix(postfix);  //evaluated value before percent
 
-    /*let result = evaluatePercent(evaluatePostfix(postfix), Number(array[array.length - 2]));
-    return console.log(result);*/
-
-    switch (sign) {
+        switch (array[array.length - 3]) {
         case '+': 
-        newValue = number + (number * percent / 100);
+        newValue = valueBeforePercent + (valueBeforePercent * (array[array.length - 2]) / 100);
             break;
         case '-': 
-        newValue = number - (number * percent / 100);
+        newValue = valueBeforePercent - (valueBeforePercent * (array[array.length - 2]) / 100);
             break;
         case '*': 
-        newValue = number * percent / 100;
+        newValue = valueBeforePercent * (array[array.length - 2]) / 100;
             break;
         case '/': 
-        newValue = number / (percent / 100);
+        newValue = valueBeforePercent / ((array[array.length - 2]) / 100);
             break;
         default:
             break;
+        }
+
+        array.splice(0, array.length, newValue);
+        console.log(array);
+        return array.toString();
     }
 }
 
@@ -171,7 +163,7 @@ function evaluatePostfix(postfixNotation) {
 
     if (postfixNotation.length == 2) {
         postfixNotation.pop();
-        return postfixNotation.pop();
+        return Number(postfixNotation.pop());
     }
 
     for (let i = 0; i < postfixNotation.length; i++) {
