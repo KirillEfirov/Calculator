@@ -24,8 +24,9 @@ function Main() {
                 console.log(array);
                 let postfix = intoPostfixNotation(array);
                 console.log(postfix);
-                output = "";
-                return console.log(evaluatePostfix(postfix));
+                output = String(evaluatePostfix(postfix));
+                console.log(output);
+                return console.log(typeof output);
             }
             else if (each.textContent === '.') {
                 let arr = Array.from(output);
@@ -61,15 +62,8 @@ function Main() {
             else if(each.textContent === '%') {
                 output += " ";
                 output += each.textContent;
-                let array = output.split(' ');
-                console.log(array);
-
-                let beforePercent = array.slice(0, array.length - 3);
-                if(beforePercent.length === 1) return console.log(beforePercent[0]);
-                let postfix = intoPostfixNotation(beforePercent);
-
-                /*let result = evaluatePercent(evaluatePostfix(postfix), Number(array[array.length - 2]));
-                return console.log(result);*/
+                
+                
             }
         });
     }
@@ -77,9 +71,24 @@ function Main() {
 Main();
 
 
-
-function evaluatePercent(number, percent, sign) {
+function evaluatePercent(output) {
     let newValue = 0;
+    let array = output.split(' ');
+
+    if (array.length === 2) {
+        array.pop();
+    }
+
+    let beforePercent = array.slice(0, array.length - 3);
+    if(beforePercent.length === 1) {
+        
+    }
+    else {
+        let postfix = intoPostfixNotation(beforePercent);
+    }
+
+    /*let result = evaluatePercent(evaluatePostfix(postfix), Number(array[array.length - 2]));
+    return console.log(result);*/
 
     switch (sign) {
         case '+': 
@@ -97,10 +106,9 @@ function evaluatePercent(number, percent, sign) {
         default:
             break;
     }
+
+
 }
-
-
-
 
 function intoPostfixNotation(infixValue) {
     let stack = new Stack();
@@ -142,14 +150,6 @@ function intoPostfixNotation(infixValue) {
     return output.split(' ');
 }
 
-
-
-
-
-
-
-
-
 function CheckIfOperator(val) {
     if (val == '+' || val == '-' ||
         val == '*' || val == '/') {
@@ -158,16 +158,6 @@ function CheckIfOperator(val) {
     else
         return false;
 }
-
-
-
-
-
-
-
-
-
-
 
 function evaluatePostfix(postfixNotation) {
     let newValue = 0;
@@ -200,16 +190,6 @@ function evaluatePostfix(postfixNotation) {
     }
     return postfixNotation.pop();
 }
-
-
-
-
-
-
-
-
-
-
 
 class Stack {
     constructor() {
@@ -247,15 +227,6 @@ class Stack {
         return this.items[this.items.length - 1];
     }
 }
-
-
-
-
-
-
-
-
-
 
 class Queue {
     constructor() {
