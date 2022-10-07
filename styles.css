@@ -14,10 +14,10 @@ body {
 
 .grid-container {
     display: grid;
-    /*border: 1px solid black;*/
+    border: 1px solid #949da4;
     background-color: #131313;
-    width: 380px;
-    height: 600px;
+    width: 320px;
+    height: 500px;
     border-radius: 5px;
     padding: 10px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -25,19 +25,21 @@ body {
   }
 
   button {
-    width: 80px;
-    height: 80px;
+    width: 69px;
+    height: 69px;
     border-radius: 50%;
     margin: 2px;
   }
 
   .fun-btn {
     background: #00E6F6;
+    border-color: #00E6F6;
   }
 
   button.number {
     background: #232534;
     color: aliceblue;
+    border-color: #232534;
   }
 
   .fun-btn:hover {
@@ -48,15 +50,18 @@ body {
     background-color: #282a3a;
   }
 
-  /*button:hover {
-    background-color: aliceblue;
-  }*/
-
-  .display {
+  #display {
     margin: 5px;
+    margin-bottom: 10px;
     padding-right: 15px;
     text-align: end;
     color: aliceblue;
+    border: 5px solid #232534;
+
+    grid-column-start: 1;
+    grid-column-end: 5;
+    grid-row-start: 1;
+    grid-row-end: 2;
   }
 
   .forNumbers {
@@ -69,9 +74,7 @@ body {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .display {
-    grid-column-start: 1;
-    grid-column-end: 5;
-    grid-row-start: 1;
-    grid-row-end: 2;
+  span.equals {
+    font-size: 20px;
+    color: #949da4;
   }

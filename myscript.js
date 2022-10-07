@@ -12,7 +12,7 @@ function Main() {
         each.addEventListener("click", () => {
             if(each.textContent === '=') {
                 output = outputOfEval(output);
-                document.getElementsByClassName('expression')[0].innerHTML = `${output}`; 
+                document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
             }
             else if (each.textContent === '.') {
                 let arr = Array.from(output);
