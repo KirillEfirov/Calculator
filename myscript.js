@@ -26,7 +26,8 @@ function Main() {
                 let postfix = intoPostfixNotation(array);
                 console.log(postfix);
                 output = String(evaluatePostfix(postfix));
-                return console.log(output);
+                document.getElementsByClassName('equals')[0].innerHTML = `= ${output}`;
+                return console.log(output); 
             }
             else if (each.textContent === '.') {
                 let arr = Array.from(output);
@@ -50,9 +51,12 @@ function Main() {
                 output += " ";
                 output += each.textContent;
                 output += " ";
+                let array = output.split(' ');
+                console.log(array);
             } 
             else if(each.textContent >= '0' && each.textContent <= '9'){
                 output += each.textContent;
+                document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
                 let array = output.split(' ');
                 console.log(array);
                 let postfix = intoPostfixNotation(array);
@@ -60,17 +64,31 @@ function Main() {
                 return console.log(evaluatePostfix(postfix));
             }
             else if(each.textContent === '%') {
-                let remembOutput = output;
                 output += " ";
                 output += each.textContent;
                 let array = output.split(' ');
                 output = evaluatePercent(array);
                 console.log(output);
             }
+            else if (each.id == 'Backspace') {
+                output = backspace(output.split(''));
+                console.log(output);
+            }
         });
     }
 }
 Main();
+
+
+
+function backspace(arr) {
+    if (arr[arr.length - 1] >= "0" && arr[arr.length - 1] <= "9" || arr[arr.length - 1] == ".") arr.pop();
+    else if (arr[arr.length - 1] == " ") arr.splice(arr.length - 3, 3);
+    let arrToString = "";
+    arr.forEach(arr => { arrToString += arr; });
+    console.log(arr);
+    return arrToString;
+}
 
 
 function evaluatePercent(array) {
@@ -117,7 +135,7 @@ function intoPostfixNotation(infixValue) {
         if (CheckIfOperator(infixValue[i])) {
             if (infixValue[i] == '+' || infixValue[i] == '-') { 
                 while (stack.topOfStack() == '*' || stack.topOfStack() == '/'
-                    || stack.topOfStack() == '+' || stack.topOfStack() == '-') {    
+                    || stack.topOfStack() == '+' || stack.topOfStack() == '-') {  
                     output += stack.pop();
                     output += " ";  
                 } 
@@ -125,7 +143,7 @@ function intoPostfixNotation(infixValue) {
             }
             else if(infixValue[i] == '*' || infixValue[i] == '/') {
                 while (stack.topOfStack() == '*' 
-                    || stack.topOfStack() == '/') {     
+                    || stack.topOfStack() == '/') {  
                     output += stack.pop();
                     output += " ";  
                 }
@@ -229,37 +247,5 @@ class Stack {
 
     topOfStack() {
         return this.items[this.items.length - 1];
-    }
-}
-
-class Queue {
-    constructor() {
-        this.items = [];
-    }
-
-    push(element) {
-        return this.items.unshift(element);
-    }
-
-    pop() {
-        if(this.items.length > 0) {
-            return this.items.pop();
-        }
-        return 0;
-    }
-
-    isEmpty(){
-        return this.items.length == 0;
-     }
-
-    size(){
-        return this.items.length;
-    }
-
-    printStack() {
-        var queue = "";
-        for (var i = 0; i < this.items.length; i++)
-            queue += this.items[i] + " ";
-        return queue;
     }
 }
