@@ -1,33 +1,18 @@
-const display = document.querySelector("#display");
 let br = document.querySelector("br");
 let expression = document.querySelector(".expression");
 let equals = document.querySelector(".equals");
 let button = document.querySelectorAll("button");
 const number = document.querySelectorAll(".number");
 
-/**
- * Make up new name for function or rewrite function at all
- * make it smaller 
- */
-
-
-/**
- * change ifs on switch in getInfix()
- */
-
 function Main() {
     var output = "";
+    var evalOutput = "";
 
     for(const each of button) {
         each.addEventListener("click", () => {
             if(each.textContent === '=') {
-                let array = output.split(' ');
-                console.log(array);
-                let postfix = intoPostfixNotation(array);
-                console.log(postfix);
-                output = String(evaluatePostfix(postfix));
-                document.getElementsByClassName('equals')[0].innerHTML = `= ${output}`;
-                return console.log(output); 
+                output = outputOfEval(output);
+                document.getElementsByClassName('expression')[0].innerHTML = `${output}`; 
             }
             else if (each.textContent === '.') {
                 let arr = Array.from(output);
@@ -39,40 +24,55 @@ function Main() {
                         if (arr[i] == ".") counter++;
                         if (arr[i] == " ") counter = 0;
                     }
-                    if(counter == 0) {
+                    if (counter == 0) {
                         output += each.textContent;
                         counter = 0;
                     }
                 }
-                return console.log(output);
+                outputOfEval(output);
             }
-            else if(each.textContent === '+' || each.textContent === '-'
-                 || each.textContent === '*' || each.textContent === '/'){
+            else if (each.textContent === '+' || each.textContent === '-'
+                  || each.textContent === '*' || each.textContent === '/'){
                 output += " ";
                 output += each.textContent;
                 output += " ";
-                let array = output.split(' ');
-                console.log(array);
+                outputOfEval(output);
             } 
-            else if(each.textContent >= '0' && each.textContent <= '9'){
+            else if (each.textContent >= '0' && each.textContent <= '9'){
                 output += each.textContent;
                 document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
-                let array = output.split(' ');
-                console.log(array);
-                let postfix = intoPostfixNotation(array);
-                console.log(postfix);
-                return console.log(evaluatePostfix(postfix));
+                outputOfEval(output);
             }
-            else if(each.textContent === '%') {
+            else if (each.textContent === '%') {
                 output += " ";
                 output += each.textContent;
                 let array = output.split(' ');
                 output = evaluatePercent(array);
-                console.log(output);
+                document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
+                outputOfEval(output);
+            }
+            else if (each.id == 'pi') {
+                let arr = Array.from(output); 
+                    let counter = 0;
+
+                    for (let i = 0; i < arr.length; i++) {
+                        if (arr[i] == "." || arr[i] >= "0" && arr[i] <= "9") counter++;
+                        if (arr[i] == " ") counter = 0;
+                    }
+                    if (counter == 0) {
+                        output += 3.14;
+                        counter = 0;
+                    }
+                outputOfEval(output);
             }
             else if (each.id == 'Backspace') {
                 output = backspace(output.split(''));
-                console.log(output);
+                outputOfEval(output);
+            }
+            else if (each.id == 'AC') {
+                output = "";
+                document.getElementsByClassName('expression')[0].innerHTML = "";
+                document.getElementsByClassName('equals')[0].innerHTML = "0";
             }
         });
     }
@@ -80,16 +80,24 @@ function Main() {
 Main();
 
 
+function outputOfEval(output) {
+    document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
+    let array = output.split(' ');
+    console.log(array);
+    let postfix = intoPostfixNotation(array);
+    console.log(postfix);
+    output = String(evaluatePostfix(postfix));
+    document.getElementsByClassName('equals')[0].innerHTML = `${output}`;
+    return output; 
+}
 
 function backspace(arr) {
     if (arr[arr.length - 1] >= "0" && arr[arr.length - 1] <= "9" || arr[arr.length - 1] == ".") arr.pop();
     else if (arr[arr.length - 1] == " ") arr.splice(arr.length - 3, 3);
     let arrToString = "";
     arr.forEach(arr => { arrToString += arr; });
-    console.log(arr);
     return arrToString;
 }
-
 
 function evaluatePercent(array) {
     if (array.length === 2) {
@@ -122,7 +130,6 @@ function evaluatePercent(array) {
         }
 
         array.splice(0, array.length, newValue);
-        console.log(array);
         return array.toString();
     }
 }
@@ -161,8 +168,6 @@ function intoPostfixNotation(infixValue) {
             output += " ";  
         } else output += stack.pop();    
     }
-    
-    //console.log(`output(string): ${output}`);
 
     return output.split(' ');
 }
@@ -200,7 +205,7 @@ function evaluatePostfix(postfixNotation) {
                 case '*': 
                 newValue = Number(postfixNotation[i - 2]) * Number(postfixNotation[i - 1]);
                     break;
-                case '/': 
+                case '/':
                 newValue = Number(postfixNotation[i - 2]) / Number(postfixNotation[i - 1]);
                     break;
                 default:
