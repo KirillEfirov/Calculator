@@ -57,11 +57,11 @@ body {
     text-align: end;
     color: aliceblue;
     border: 5px solid #232534;
-
     grid-column-start: 1;
     grid-column-end: 5;
     grid-row-start: 1;
     grid-row-end: 2;
+    height: 110px;
   }
 
   .forNumbers {
@@ -72,6 +72,10 @@ body {
 
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  span.expression {
+    word-break: break-all;
   }
 
   span.equals {
