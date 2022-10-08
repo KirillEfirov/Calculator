@@ -8,6 +8,7 @@ function Main() {
 
     for(const each of button) {
         each.addEventListener("click", () => {
+            changeStyle();
             if(each.textContent === '=') {
                 output = outputOfEval(output);
                 document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
@@ -30,7 +31,7 @@ function Main() {
                         counter = 0;
                     }
                 }
-                changeStyle();
+                //changeStyle();
                 outputOfEval(output);
             }
             else if (each.textContent === '+' || each.textContent === '-'
@@ -38,12 +39,12 @@ function Main() {
                 output += " ";
                 output += each.textContent;
                 output += " ";
-                changeStyle();
+                //changeStyle();
                 outputOfEval(output);
             } 
             else if (each.textContent >= '0' && each.textContent <= '9'){
                 output += each.textContent;
-                changeStyle();
+                //changeStyle();
                 document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
                 outputOfEval(output);
             }
@@ -53,7 +54,7 @@ function Main() {
                 let array = output.split(' ');
                 output = evaluatePercent(array);
                 document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
-                changeStyle();
+                //changeStyle();
                 outputOfEval(output);
             }
             else if (each.id == 'pi') {
@@ -68,24 +69,26 @@ function Main() {
                     output += 3.14;
                     counter = 0;
                 }
-                changeStyle();
+                //changeStyle();
                 outputOfEval(output);
             }
             else if (each.id == 'Backspace') {
                 output = backspace(output.split(''));
-                changeStyle();
+                //changeStyle();
                 outputOfEval(output);
             }
             else if (each.id == 'AC') {
                 output = "";
                 document.getElementsByClassName('expression')[0].innerHTML = "";
                 document.getElementsByClassName('equals')[0].innerHTML = "0";
-                changeStyle();
+                //changeStyle();
             }
         });
     }
 }
 Main();
+
+
 
 function changeStyle() {
     document.getElementsByClassName('expression')[0].removeAttribute('style');
@@ -93,7 +96,6 @@ function changeStyle() {
     document.getElementsByClassName('equals')[0].setAttribute('style', 'font-size: 20px');
     document.getElementsByClassName('expression')[0].setAttribute('style', 'font-size: xx-large');
 }
-
 
 function outputOfEval(output) {
     document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
