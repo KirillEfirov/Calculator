@@ -1,4 +1,3 @@
-let br = document.querySelector("br");
 let expression = document.querySelector(".expression");
 let equals = document.querySelector(".equals");
 let button = document.querySelectorAll("button");
@@ -6,13 +5,15 @@ const number = document.querySelectorAll(".number");
 
 function Main() {
     var output = "";
-    var evalOutput = "";
 
     for(const each of button) {
         each.addEventListener("click", () => {
             if(each.textContent === '=') {
                 output = outputOfEval(output);
                 document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
+                document.getElementsByClassName('equals')[0].setAttribute('style', 'font-size: xx-large; color: aliceblue');
+                document.getElementsByClassName('expression')[0].setAttribute('style', 'font-size: 20px; color: #949da4');
+
             }
             else if (each.textContent === '.') {
                 let arr = Array.from(output);
@@ -29,6 +30,7 @@ function Main() {
                         counter = 0;
                     }
                 }
+                changeStyle();
                 outputOfEval(output);
             }
             else if (each.textContent === '+' || each.textContent === '-'
@@ -36,10 +38,12 @@ function Main() {
                 output += " ";
                 output += each.textContent;
                 output += " ";
+                changeStyle();
                 outputOfEval(output);
             } 
             else if (each.textContent >= '0' && each.textContent <= '9'){
                 output += each.textContent;
+                changeStyle();
                 document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
                 outputOfEval(output);
             }
@@ -49,35 +53,46 @@ function Main() {
                 let array = output.split(' ');
                 output = evaluatePercent(array);
                 document.getElementsByClassName('expression')[0].innerHTML = `${output}`;
+                changeStyle();
                 outputOfEval(output);
             }
             else if (each.id == 'pi') {
                 let arr = Array.from(output); 
                     let counter = 0;
 
-                    for (let i = 0; i < arr.length; i++) {
-                        if (arr[i] == "." || arr[i] >= "0" && arr[i] <= "9") counter++;
-                        if (arr[i] == " ") counter = 0;
-                    }
-                    if (counter == 0) {
-                        output += 3.14;
-                        counter = 0;
-                    }
+                for (let i = 0; i < arr.length; i++) {
+                    if (arr[i] == "." || arr[i] >= "0" && arr[i] <= "9") counter++;
+                    if (arr[i] == " ") counter = 0;
+                }
+                if (counter == 0) {
+                    output += 3.14;
+                    counter = 0;
+                }
+                changeStyle();
                 outputOfEval(output);
             }
             else if (each.id == 'Backspace') {
                 output = backspace(output.split(''));
+                changeStyle();
                 outputOfEval(output);
             }
             else if (each.id == 'AC') {
                 output = "";
                 document.getElementsByClassName('expression')[0].innerHTML = "";
                 document.getElementsByClassName('equals')[0].innerHTML = "0";
+                changeStyle();
             }
         });
     }
 }
 Main();
+
+function changeStyle() {
+    document.getElementsByClassName('expression')[0].removeAttribute('style');
+    document.getElementsByClassName('equals')[0].removeAttribute('style');
+    document.getElementsByClassName('equals')[0].setAttribute('style', 'font-size: 20px');
+    document.getElementsByClassName('expression')[0].setAttribute('style', 'font-size: xx-large');
+}
 
 
 function outputOfEval(output) {
