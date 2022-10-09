@@ -66,7 +66,8 @@ body {
   }
 
   *::-webkit-scrollbar {
-    width: 2px; 
+    width: 2px;
+    height: 2px; 
   }
   
   *::-webkit-scrollbar-thumb {
@@ -83,11 +84,11 @@ body {
   }
 
   span.expression {
-    /*word-break: break-all;*/
+    word-break: break-all;
   }
 
   span.equals {
-    /*word-break: break-all;*/
+    word-break: break-all;
     font-size: 15px;
     color: #949da4;
   }
