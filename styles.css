@@ -62,6 +62,11 @@ body {
     grid-row-start: 1;
     grid-row-end: 2;
     height: 110px;
+    overflow-y: auto;
+  }
+
+  *::-webkit-scrollbar {
+    width: 0.5px; 
   }
 
   .forNumbers {
@@ -69,16 +74,16 @@ body {
     grid-column-end: 4;
     grid-row-start: 3;
     grid-row-end: 7;
-
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
 
   span.expression {
-    word-break: break-all;
+    /*word-break: break-all;*/
   }
 
   span.equals {
-    font-size: 20px;
+    /*word-break: break-all;*/
+    font-size: 15px;
     color: #949da4;
   }
